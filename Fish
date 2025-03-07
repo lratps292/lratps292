@@ -1,0 +1,69 @@
+import random
+import time
+
+class Fish:
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+
+    def __repr__(self):
+        return f"{self.name} (Price: ${self.price})"
+
+class FishingGame:
+    def __init__(self):
+        self.fish_list = [
+            Fish("Salmon", 20),
+            Fish("Trout", 15),
+            Fish("Bass", 10),
+            Fish("Catfish", 25),
+            Fish("Cheat Fish", 1000)  # Expensive rare fish
+        ]
+        self.funds = 0
+
+    def show_inventory(self):
+        print(f"\nCurrent funds: ${self.funds}")
+        print("Available fish to catch:")
+        for i, fish in enumerate(self.fish_list, 1):
+            print(f"{i}. {fish}")
+
+    def cast_line(self):
+        print("\nCasting the line...")
+        time.sleep(2)
+        caught_fish = random.choice(self.fish_list)
+        print(f"You caught a {caught_fish.name}!")
+        self.funds += caught_fish.price
+        print(f"You earned ${caught_fish.price}. Total funds: ${self.funds}\n")
+
+    def sell_fish(self):
+        if self.funds > 0:
+            print("\nSelling your catch to the NPC...")
+            time.sleep(1)
+            print(f"Sold for ${self.funds}. Now you have ${self.funds}.")
+            self.funds = 0
+        else:
+            print("\nYou have no fish to sell!")
+
+    def play(self):
+        while True:
+            print("\n--- Fishing Game ---")
+            self.show_inventory()
+            print("1. Cast line to catch fish")
+            print("2. Sell fish")
+            print("3. Exit Game")
+
+            choice = input("\nWhat do you want to do? (1/2/3): ")
+
+            if choice == '1':
+                self.cast_line()
+            elif choice == '2':
+                self.sell_fish()
+            elif choice == '3':
+                print("Thanks for playing!")
+                break
+            else:
+                print("Invalid choice. Please select again.")
+
+# Main function to start the game
+if __name__ == "__main__":
+    game = FishingGame()
+    game.play() 
